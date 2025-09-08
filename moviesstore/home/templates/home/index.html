@@ -11,6 +11,26 @@
     <div class="row mt-3">
       <div class="col mx-auto text-center mb-3">
         <h4>Welcome to the best movie store!!</h4>
+        <br>
+        <br>
+        {% if user.is_authenticated %}
+        <h4>Welcome, {{user.username}}
+        <br>
+        <a class="nav-link" href="{% url 'movies.index' %}">Check out some movies!</a>
+        </h4>
+        {% else %}
+        <h4>
+        <a class="nav-link" href="{% url 'accounts.login' %}">Log in or</a>
+        <a class="nav-link" href="{% url 'accounts.signup' %}">Create an account to get started!</a> 
+        </h4>
+        {% endif %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
       </div>
     </div>
   </div>

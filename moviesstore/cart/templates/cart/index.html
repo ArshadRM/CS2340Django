@@ -6,8 +6,13 @@
   <div class="container">
     <div class="row mt-3">
       <div class="col mx-auto mb-3">
-        <h2>Shopping Cart</h2>
+        <h2>Shopping Cart - Cart {{ template_data.active_cart }}</h2>
         <hr />
+        <div class="btn-group" role="group" aria-label="Select Cart">
+          <a href="{% url 'cart.view' cart_id=1 %}" class="btn {% if template_data.active_cart == 1 %}btn-primary{% else %}btn-outline-primary{% endif %}">Cart 1</a>
+          <a href="{% url 'cart.view' cart_id=2 %}" class="btn {% if template_data.active_cart == 2 %}btn-primary{% else %}btn-outline-primary{% endif %}">Cart 2</a>
+          <a href="{% url 'cart.view' cart_id=3 %}" class="btn {% if template_data.active_cart == 3 %}btn-primary{% else %}btn-outline-primary{% endif %}">Cart 3</a>
+        </div>
       </div>
     </div>
     <div class="row m-1">
@@ -26,7 +31,13 @@
             <td>{{ movie.id }}</td>
             <td>{{ movie.name }}</td>
             <td>${{ movie.price }}</td>
-            <td>{{ request.session.cart|get_quantity:movie.id }}</td>
+            {% with active_cart_selection=request.session.active_cart|default:"1" %}
+            {% with cart_name="cart_"|add:active_cart_selection %}
+            {% with current_cart=request.session|get_item:cart_name %}
+            <td>{{ current_cart|get_quantity:movie.id }}</td>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
           </tr>
           {% endfor %}
         </tbody>

@@ -18,6 +18,13 @@ class Review(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    # new field for likfes
+    likes = models.ManyToManyField(
+        User,
+        related_name="liked_reviews",  # all reviews this user liked
+        blank=True
+    )
 
     def __str__(self):
         return str(self.id) + ' - ' + self.movie.name

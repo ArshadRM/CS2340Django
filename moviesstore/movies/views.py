@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Review
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -23,6 +24,15 @@ def show(request, id):
     template_data['movie'] = movie
     template_data['reviews'] = reviews
     return render(request, 'movies/show.html', {'template_data': template_data})
+
+def all_reviews(request):
+    reviews = Review.objects.annotate(num_likes=Count('likes')).order_by('-num_likes')
+    template_data = {
+        'reviews': reviews
+    }
+    print(template_data)
+    
+    return render(request, 'movies/all_reviews.html', template_data)
 
 @login_required
 def create_review(request, id):
@@ -55,6 +65,17 @@ def edit_review(request, id, review_id):
         return redirect('movies.show', id=id)
     else:
         return redirect('movies.show', id=id)
+    
+@login_required
+def toggle_like_review(request, id, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if request.user in review.likes.all():
+        review.likes.remove(request.user)
+    else:
+        print("Hello")
+        review.likes.add(request.user)
+        
+    return redirect('movies.show', id=id)
 
 @login_required
 def delete_review(request, id, review_id):

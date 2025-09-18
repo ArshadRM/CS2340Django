@@ -32,7 +32,7 @@ def all_reviews(request):
     }
     print(template_data)
     
-    return render(request, 'movies/all_reviews.html', template_data)
+    return render(request, 'movies/all_reviews.html', {'template_data': template_data})
 
 @login_required
 def create_review(request, id):

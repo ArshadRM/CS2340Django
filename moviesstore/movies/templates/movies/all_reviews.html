@@ -13,7 +13,7 @@
         <h2>ALL Reviews</h2>
         <hr />
         <ul class="list-group">
-          {% for review in reviews %}
+          {% for review in template_data.reviews %}
           <li class="list-group-item pb-3 pt-3">
             <h5 class="card-title">
               Review by {{ review.user.username }}

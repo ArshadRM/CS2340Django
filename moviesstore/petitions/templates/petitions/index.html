@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ template_data.title }}</h1>
+    <a href="{% url 'petitions.create' %}" class="btn btn-primary">Create Petition</a>
+    <hr>
+    <div class="row">
+        {% for petition in template_data.petitions %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ petition.movie_title }}</h5>
+                    <p class="card-text">{{ petition.description }}</p>
+                    <a href="{% url 'petitions.show' petition.id %}" class="btn btn-primary">View Petition</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

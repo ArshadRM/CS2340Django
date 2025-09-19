@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ template_data.title }}</h1>
+    <hr>
+    <p>{{ template_data.petition.description }}</p>
+    <p>Created by: {{ template_data.petition.user.username }}</p>
+    <p>Votes: {{ template_data.petition.votes.count }}</p>
+    <hr>
+    <form action="{% url 'petitions.vote' template_data.petition.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            {% if user in template_data.petition.votes.all %}
+                Unvote
+            {% else %}
+                Vote
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

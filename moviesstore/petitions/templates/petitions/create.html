@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ template_data.title }}</h1>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="movie_title" class="form-label">Movie Title</label>
+            <input type="text" class="form-control" id="movie_title" name="movie_title" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
